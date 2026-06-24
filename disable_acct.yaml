@@ -10,5 +10,4 @@
        account_disabled: true
      loop: "{{ users }}"
 
-   - name: Reboot to effect changes
-     ansible.windows.win_reboot:
+  
