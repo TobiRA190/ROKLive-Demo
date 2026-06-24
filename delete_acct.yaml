@@ -1,0 +1,13 @@
+- name: Delete local account
+  hosts: myhosts
+  gather_facts: no
+  
+  tasks:
+   - name: Delete the user test
+     ansible.windows.win_user:
+       name: "{{ item }}"
+       state: absent
+     loop: "{{ users }}"
+
+   - name: Reboot to effect changes
+     ansible.windows.win_reboot:

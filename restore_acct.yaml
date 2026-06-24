@@ -1,0 +1,16 @@
+- name: Restore local account
+  hosts: myhosts
+  gather_facts: no
+  
+  tasks:
+   - name: Ensure user test is present
+     ansible.windows.win_user:
+       name: "{{ item }}"
+       password: "{{ item }}"
+       state: present
+       groups:
+         - Users
+     loop: "{{ users }}"
+
+   - name: Reboot to effect changes
+     ansible.windows.win_reboot:

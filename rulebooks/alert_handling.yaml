@@ -1,0 +1,25 @@
+---
+- name: Listen for SecureOT alerts
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 192.168.1.116
+        port: 5000
+
+  rules:
+    - name: Handle malicious file
+      condition: event.payload.message == "malicious files"
+      action:
+        run_job_template:
+          name: deletefiles
+          organization: Default
+          job_args:
+            extra_vars:
+              file_path: "{{ event.payload.paths }}"
+
+    - name: Regular Ping
+      condition: event.payload.message == "check os"
+      action:
+        run_job_template:
+          name: check
+          organization: Default

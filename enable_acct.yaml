@@ -1,0 +1,13 @@
+- name: Disable local account
+  hosts: myhosts
+  gather_facts: no
+  
+  tasks:
+   - name: Disable account
+     ansible.windows.win_user:
+       name: "{{ item }}"
+       account_disabled: false
+     loop: "{{ users }}"
+
+   - name: Reboot to effect changes
+     ansible.windows.win_reboot:

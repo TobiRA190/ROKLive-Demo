@@ -1,0 +1,28 @@
+---
+- name: Listen for reset commands
+  hosts: all
+  sources:
+    - ansible.eda.webhook:
+        host: 192.168.1.116
+        port: 4999
+
+  rules:
+    - name: Restore deleted account
+      condition: event.payload.message == "restore account"
+      action:
+        run_job_template:
+          name: restoreAccount
+          organization: Default
+          job_args:
+            extra_vars:
+              users: "{{ event.payload.users }}"
+
+    - name: Enable disabled account
+      condition: event.payload.message == "enable account"
+      action:
+        run_job_template:
+          name: enableAccount
+          organization: Default
+          job_args:
+            extra_vars:
+              users: "{{ event.payload.users }}"
