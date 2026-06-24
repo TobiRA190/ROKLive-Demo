@@ -1,9 +1,9 @@
-- name: Disable local account
+- name: Enable local account
   hosts: myhosts
   gather_facts: no
   
   tasks:
-   - name: Disable account
+   - name: Enable account
      ansible.windows.win_user:
        name: "{{ item }}"
        account_disabled: false
