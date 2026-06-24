@@ -7,19 +7,22 @@
         port: 5000
 
   rules:
-    - name: Handle malicious file
-      condition: event.payload.message == "malicious files"
+    - name: Disable account
+      condition: event.payload.message == "disable"
       action:
         run_job_template:
-          name: deletefiles
+          name: disableAccount
           organization: Default
           job_args:
             extra_vars:
-              file_path: "{{ event.payload.paths }}"
+              file_path: "{{ event.payload.users }}"
 
-    - name: Regular Ping
-      condition: event.payload.message == "check os"
+    - name: Delete account
+      condition: event.payload.message == "remove"
       action:
         run_job_template:
-          name: check
+          name: deleteAccount
           organization: Default
+          job_args:
+            extra_vars:
+              file_path: "{{ event.payload.users }}"
