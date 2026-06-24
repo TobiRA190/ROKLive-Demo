@@ -15,7 +15,7 @@
           organization: Default
           job_args:
             extra_vars:
-              file_path: "{{ event.payload.users }}"
+              users: "{{ event.payload.users }}"
 
     - name: Delete account
       condition: event.payload.message == "remove"
@@ -25,4 +25,4 @@
           organization: Default
           job_args:
             extra_vars:
-              file_path: "{{ event.payload.users }}"
+              users: "{{ event.payload.users }}"
