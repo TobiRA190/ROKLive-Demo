@@ -6,6 +6,7 @@
    - name: Disable account
      ansible.windows.win_user:
        name: "{{ item }}"
+       state: present
        account_disabled: true
      loop: "{{ users }}"
 
